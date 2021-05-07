@@ -6,6 +6,7 @@ class BookCommentsController < ApplicationController
     @book_comments = @book.book_comments
   end
 
+
   def create
     @book_comment = BookComment.new(book_comment_params)
     @book_comment.user_id = current_user.id
@@ -19,11 +20,13 @@ class BookCommentsController < ApplicationController
     end
   end
 
+
   def destroy
     @book_comment = BookComment.find_by(id: params[:id], book_id: params[:book_id])
     @book_comment.destroy
     redirect_to book_path(@book_comment.book)
   end
+
 
   private
   def book_comment_params
