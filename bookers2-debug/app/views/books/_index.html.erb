@@ -21,15 +21,30 @@
         <td>
           <%= book.body %>
         </td>
-        <% if @user == current_user %>
+        <td>
+          <% if current_user. already_favorited?(book) %>
+            <%= link_to book_favorites_path(book), method: :delete do %>
+              <i class="fas fa-heart"></i>
+            <% end %>
+          <% else %>
+            <%= link_to book_favorites_path(book), method: :post do %>
+              <i class="far fa-heart"></i>
+            <% end %>
+          <% end %>
+          <%= book.favorites.count %>
+        </td>
+        <td>
+          コメント数:<%= book.book_comments.count %>
+        </td>
+        <% if @book.user == current_user %>
         <td>
           <%= link_to "Edit", edit_book_path(book) %>
         </td>
         <td>
           <%= link_to "Destroy", book_path(book), method: :delete, "data-confirm" => "Are you sure?" %>
         </td>
-      </tr>
         <% end %>
+      </tr>
     <% end %>
   </tbody>
 </table>
