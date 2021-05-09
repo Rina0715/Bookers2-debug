@@ -6,8 +6,16 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:index, :create, :destroy]
   end
   resources :users do
-    resouce :relationship
+  #   member do
+  #     get :following, :followers
+  #   end
+  # end
+  # resources :relationships, only: [:create, :destroy]
+    resource :relationships, only: [:create, :destroy]
+    get 'followings' => 'relationships#followings', as: 'followings'
+    get 'followers' => 'relationships#followers', as: 'followers'
   end
+
 
   get 'home/about' => 'homes#about'
 end
