@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :books, dependent: :destroy
@@ -59,11 +59,15 @@ class User < ApplicationRecord
 
 
   def follow(user_id)
-    relationships.create(followed_id: user_id)
+    unless self.id == user_id
+      self.relationships.find_or_create_by(followed_id: user_id)
+    end
   end
+
   def unfollow(user_id)
     relationships.find_by(followed_id: user_id).destroy
   end
+
   def following?(user)
     followings.include?(user)
   end
